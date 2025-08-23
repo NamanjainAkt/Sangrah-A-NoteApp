@@ -1,34 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom"
+import { Home, Archive, Important, Bin } from "./pages"
+import Sidebar from "./components/Sidebar"
+import Navbar from "./components/Navbar"
+import Login from "./pages/Login"
+import Signup from "./pages/Signup"
+import AuthLayout from "./components/AuthLayout"
+import AuthInitializer from "./components/AuthInitializer"
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="min-h-screen dark:bg-black bg-white">
+      <AuthInitializer />
+      <Routes>
+        <Route path="/login" element={
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        } />
+        <Route path="/signup" element={
+          <AuthLayout authentication={false}>
+            <Signup />
+          </AuthLayout>
+        } />
+        
+        <Route path="/" element={
+          <AuthLayout authentication={true}>
+            <div className="min-h-screen dark:bg-black bg-white">
+              <Navbar />
+              <main className="flex">
+                <Sidebar className="w-1/3" />
+                <div className="w-2/3 min-w-[80vw] flex justify-center items-center p-8">
+                  <Home />
+                </div>
+              </main>
+            </div>
+          </AuthLayout>
+        } />
+        
+        <Route path="/archive" element={
+          <AuthLayout authentication={true}>
+            <div className="min-h-screen dark:bg-black bg-white">
+              <Navbar />
+              <main className="flex">
+                <Sidebar className="w-1/3" />
+                <div className="w-2/3 min-w-[80vw] flex justify-center items-center p-8">
+                  <Archive />
+                </div>
+              </main>
+            </div>
+          </AuthLayout>
+        } />
+        
+        <Route path="/important" element={
+          <AuthLayout authentication={true}>
+            <div className="min-h-screen dark:bg-black bg-white">
+              <Navbar />
+              <main className="flex">
+                <Sidebar className="w-1/3" />
+                <div className="w-2/3 min-w-[80vw] flex justify-center items-center p-8">
+                  <Important />
+                </div>
+              </main>
+            </div>
+          </AuthLayout>
+        } />
+        
+        <Route path="/bin" element={
+          <AuthLayout authentication={true}>
+            <div className="min-h-screen dark:bg-black bg-white">
+              <Navbar />
+              <main className="flex">
+                <Sidebar className="w-1/3" />
+                <div className="w-2/3 min-w-[80vw] flex justify-center items-center p-8">
+                  <Bin />
+                </div>
+              </main>
+            </div>
+          </AuthLayout>
+        } />
+      </Routes>
+    </div>
   )
 }
 
