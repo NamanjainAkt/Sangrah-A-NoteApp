@@ -18,8 +18,8 @@ const Archive = () => {
     const archivedNotes = notes.filter(note => note.isArchived && !note.isDeleted)
 
     return (
-        <div className="w-full max-w-4xl mx-auto">
-            <h1 className="text-2xl font-medium mb-6 dark:text-white">Archived Notes</h1>
+        <div className="w-full max-w-4xl mx-auto h-full">
+            <h1 className="text-3xl font-medium mt-14 mb-6 dark:text-white max-sm:text-center"><u>Archived Notes</u></h1>
 
             
             <div className="notes-container">

@@ -29,8 +29,8 @@ const Bin = () => {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-medium mb-6 dark:text-white text-black">Recycle Bin</h1>
+    <div className="w-full max-w-4xl mx-auto h-full">
+      <h1 className="text-3xl max-sm:text-center font-medium mb-6 mt-14 dark:text-white text-black"><u>Recycle Bin</u></h1>
       
       <div className="notes-container">
         {status === "loading" && <p className="dark:text-white text-black">Loading notes...</p>}

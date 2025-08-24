@@ -28,9 +28,9 @@ const App = () => {
           <AuthLayout authentication={true}>
             <div className="min-h-screen dark:bg-black bg-white">
               <Navbar />
-              <main className="flex">
-                <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-8 mt-24">
+              <main className="flex max-sm:relative max-sm:flex-none justify-end">
+                <Sidebar className="w-1/3 max-sm:bottom-0" />
+                <div className="w-2/3 min-w-[70vw] min-h-[90vh] flex justify-end items-center p-4 mt-14 max-sm:mx-auto right-0 mx-4 md:mx-auto max-sm:mt-4 max-sm:w-full">
                   <Home />
                 </div>
               </main>
@@ -44,7 +44,7 @@ const App = () => {
               <Navbar />
               <main className="flex">
                 <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-8">
+                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-4 mt-4 mx-auto max-sm:w-full">
                   <Archive />
                 </div>
               </main>
@@ -58,7 +58,7 @@ const App = () => {
               <Navbar />
               <main className="flex">
                 <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-8">
+                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-4 mt-4 mx-auto max-sm:w-full">
                   <Important />
                 </div>
               </main>
@@ -72,7 +72,7 @@ const App = () => {
               <Navbar />
               <main className="flex">
                 <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-8">
+                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-4 mt-4 mx-auto max-sm:w-full">
                   <Bin />
                 </div>
               </main>

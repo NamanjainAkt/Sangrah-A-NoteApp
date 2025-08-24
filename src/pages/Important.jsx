@@ -19,8 +19,8 @@ const Important = () => {
   const importantNotes = notes.filter(note => note.isImportant && !note.isDeleted)
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-medium mb-6 dark:text-white text-black">Important Notes</h1>
+    <div className="w-full max-w-4xl mx-auto h-full">
+      <h1 className="text-3xl font-medium mt-14 max-sm:text-center mb-4 dark:text-white text-black"><u>Important Notes</u></h1>
       
       <div className="notes-container">
         {status === "loading" && <p className="dark:text-white text-black">Loading notes...</p>}
