@@ -17,7 +17,7 @@ const Sidebar = () => {
         max-sm:top-auto max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:h-14 max-sm:w-full max-sm:flex-row max-sm:justify-around max-sm:items-center max-sm:border-t max-sm:border-gray-300 z-50
       `}
     >
-     <div className='mt-20 border-r-white max-sm:flex max-sm:flex-row max-sm:mb-20 max-sm:gap-8 max-sm:p-2'>
+     <div className='mt-20 border-r-white max-sm:flex max-sm:flex-row max-sm:mb-20 max-sm:gap-4 max-sm:p-2'>
        {links.map(link => (
         <NavLink
           key={link.to}
