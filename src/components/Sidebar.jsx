@@ -11,7 +11,7 @@ const Sidebar = () => {
 
   return (
     <aside className="flex flex-col items-center justify-center my-auto dark:bg-black dark:text-white bg-white text-black h-full w-54">
-      <div className="flex flex-col items-center justify-center dark:border-r dark:border-white border-r border-black mt-16 ">
+      <div className="flex flex-col items-center justify-center dark:border-r dark:border-white border-r border-black fixed ">
         {links.map(link => (
           <NavLink
             key={link.to}

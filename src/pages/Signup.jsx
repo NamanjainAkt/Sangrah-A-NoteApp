@@ -28,12 +28,12 @@ function Signup() {
 
   return (
     <div className="flex items-center justify-center w-full min-h-screen dark:bg-black bg-white">
-        <div className={`mx-auto w-full max-w-lg dark:bg-gray-800 bg-gray-100 rounded-xl p-10 border dark:border-gray-700 border-black/10 shadow-lg`}>
+        <div className={`mx-auto w-full max-w-lg dark:bg-white bg-black rounded-xl p-10 border dark:border-gray-700 border-black/10 shadow-lg`}>
             <div className="mb-6 flex justify-center">
                 <Logo width="150px" />
             </div>
-            <h2 className="text-center text-2xl font-bold leading-tight dark:text-white text-black mb-4">Sign up to create account</h2>
-            <p className="mt-2 text-center text-base dark:text-gray-300 text-black/60">
+            <h2 className="text-center text-2xl font-medium leading-tight dark:text-black text-white mb-4">Sign up to create account</h2>
+            <p className="mt-2 text-center text-base dark:text-black/60 text-white/60">
                 Already have an account?&nbsp;
                 <Link
                     to="/login"

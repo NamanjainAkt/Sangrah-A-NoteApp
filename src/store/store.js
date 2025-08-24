@@ -5,8 +5,9 @@ import notesSlice from './notesSlice';
 const store = configureStore({
     reducer: {
         auth: authSlice,
-        notes: notesSlice
-    }
+        notes: notesSlice,
+        
+    },
 });
 
 export default store;

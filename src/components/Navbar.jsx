@@ -18,7 +18,9 @@ const Navbar = () => {
   }
 
   return (
-    <header className='flex items-center p-4 dark:bg-black dark:text-white bg-white text-black justify-between'>
+    <header className='flex items-center p-4 dark:bg-black dark:text-white bg-white text-black justify-between fixed w-full'>
+
+
 
 
       <div><h1 className='text-5xl tracking-wide font-bold sangrah mx-4'>Sangrah</h1></div>

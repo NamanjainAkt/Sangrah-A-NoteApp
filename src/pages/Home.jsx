@@ -22,7 +22,7 @@ const Home = () => {
         dispatch(createNewNote({
             title,
             content,
-            userId: userData.$id,
+            userId: userData.$id, 
             isArchived: false,
             isImportant: false,
             isDeleted: false
@@ -52,10 +52,11 @@ const Home = () => {
                     className='text-white p-4 outline-none border-none bg-transparent text-xl resize-none custom-scroll'>
                 </textarea>
 
-                <div className='flex justify-end'>
+                <div className='flex justify-end items-center'>
                     <button 
                         onClick={handleCreateNote}
-                        className='text-white rounded cursor-pointer p-1'>
+                        className='text-white rounded-full w-8 h-8 hover:bg-white/20 cursor-pointer p-1 '>
+
                         <span className="material-symbols-outlined">
                             add_box
                         </span>
