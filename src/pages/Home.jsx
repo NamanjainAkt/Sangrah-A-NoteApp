@@ -36,8 +36,8 @@ const Home = () => {
     const activeNotes = notes.filter(note => !note.isArchived && !note.isDeleted && !note.isImportant)
 
     return (
-        <div className="w-full mx-auto max-sm:-mt-28 max-sm:w-5xl">
-            <div className='flex flex-col max-h-52 w-full max-w-4xl mx-auto p-4 bg-[#090808] rounded-2xl mb-8 max-sm:p-2'>
+        <div className="w-full mx-auto max-sm:mt-4 max-sm:w-5xl">
+            <div className='flex flex-col max-h-52 w-full max-w-4xl mx-auto p-4 bg-[#171717] rounded-2xl mb-8 max-sm:p-2'>
                 <input type="text"
                     placeholder='Title'
                     value={title}

@@ -33,7 +33,7 @@ const NoteCard = ({ note }) => {
 
   return (
     <>
-      <div className="bg-[#090808] rounded-lg p-4 text-white mb-4 max-sm:w-full">
+      <div className="bg-[#171717] rounded-lg p-4 text-white mb-4 max-sm:w-full">
         <h3 className="text-xl font-medium mb-2">{note.title}</h3>
         <p className="mb-4">{note.content}</p>
         <div className="flex justify-end space-x-2">
