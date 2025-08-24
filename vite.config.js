@@ -14,7 +14,7 @@ export default defineConfig({
         name: 'Sangrah',
         short_name: 'Sangrah',
         description: 'A modern note App built with react and appwrite',
-        theme_color: '#ffffff',
+        theme_color: '#000000',
         icons: [
           {
             src: 'Logo.jpg',
