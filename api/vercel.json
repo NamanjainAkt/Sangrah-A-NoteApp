@@ -1,0 +1,79 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/auth/(.*)",
+      "dest": "/src/routes/auth.js"
+    },
+    {
+      "src": "/api/notes/(.*)",
+      "dest": "/src/routes/notes.js"
+    },
+    {
+      "src": "/api/notes",
+      "dest": "/src/routes/notes.js"
+    },
+    {
+      "src": "/api/tags/(.*)",
+      "dest": "/src/routes/tags.js"
+    },
+    {
+      "src": "/api/tags",
+      "dest": "/src/routes/tags.js"
+    },
+    {
+      "src": "/api/goals/(.*)",
+      "dest": "/src/routes/goals.js"
+    },
+    {
+      "src": "/api/goals",
+      "dest": "/src/routes/goals.js"
+    },
+    {
+      "src": "/api/activity/(.*)",
+      "dest": "/src/routes/activity.js"
+    },
+    {
+      "src": "/api/activity",
+      "dest": "/src/routes/activity.js"
+    },
+    {
+      "src": "/api/notifications/(.*)",
+      "dest": "/src/routes/notifications.js"
+    },
+    {
+      "src": "/api/notifications",
+      "dest": "/src/routes/notifications.js"
+    },
+    {
+      "src": "/api/reminders/(.*)",
+      "dest": "/src/routes/reminders.js"
+    },
+    {
+      "src": "/api/reminders",
+      "dest": "/src/routes/reminders.js"
+    },
+    {
+      "src": "/api/backups/(.*)",
+      "dest": "/src/routes/backups.js"
+    },
+    {
+      "src": "/api/backups",
+      "dest": "/src/routes/backups.js"
+    },
+    {
+      "src": "/api/gamification/(.*)",
+      "dest": "/src/routes/gamification.js"
+    },
+    {
+      "src": "/api/gamification",
+      "dest": "/src/routes/gamification.js"
+    }
+  ]
+}

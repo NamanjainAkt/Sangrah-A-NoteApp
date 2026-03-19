@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import authService from '../appwrite/auth'
-import { login } from '../store/authSlice'
+import { checkAuth } from '../store/authSlice'
+import { loadSettingsFromStorage } from '../store/settingsSlice'
 
 const AuthInitializer = () => {
   const dispatch = useDispatch()
@@ -9,16 +9,25 @@ const AuthInitializer = () => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const userData = await authService.getCurrentUser()
-        if (userData) {
-          dispatch(login({ userData }))
-        }
+        dispatch(checkAuth())
       } catch (error) {
         console.error('Error initializing auth:', error)
       }
     }
 
+    const initSettings = () => {
+      try {
+        const storedSettings = localStorage.getItem('appSettings')
+        if (storedSettings) {
+          dispatch(loadSettingsFromStorage(JSON.parse(storedSettings)))
+        }
+      } catch (error) {
+        console.error('Error loading settings from localStorage:', error)
+      }
+    }
+
     initAuth()
+    initSettings()
   }, [dispatch])
 
   return null

@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { login as authLogin } from '../store/authSlice'
-import { fetchNotes } from '../store/notesSlice'; // Import fetchNotes
+import { fetchNotes } from '../store/notesSlice';
+import { fetchTags } from '../store/tagsSlice';
+import { fetchGoals } from '../store/goalsSlice';
+import { fetchGamification } from '../store/gamificationSlice';
 import {Button, Input, Logo} from "../components"
 import {useDispatch} from "react-redux"
-import authService from "../appwrite/auth"
 import {useForm} from "react-hook-form"
 
 
@@ -14,16 +16,15 @@ function Login() {
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
 
-    const login = async(data) => {
+    const handleLogin = async(data) => {
         setError("")
         try {
-            const session = await authService.login(data)
-            if (session) {
-                const userData = await authService.getCurrentUser()
-                if(userData) {
-                    dispatch(authLogin(userData));
-                    dispatch(fetchNotes(userData.$id)); // Fetch notes on login
-                }
+            const result = await dispatch(authLogin(data)).unwrap()
+            if (result) {
+                dispatch(fetchNotes())
+                dispatch(fetchTags())
+                dispatch(fetchGoals())
+                dispatch(fetchGamification())
                 navigate("/")
             }
         } catch (error) {
@@ -49,7 +50,7 @@ function Login() {
                 </Link>
             </p>
             {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-            <form onSubmit={handleSubmit(login)} className='mt-8'>
+            <form onSubmit={handleSubmit(handleLogin)} className='mt-8'>
                 <div className='space-y-5'>
                     <Input
                     label="Email: "

@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import noteService from "../appwrite/config";
+import api from "../api/client";
 
 export const fetchNotes = createAsyncThunk(
   "notes/fetchNotes",
-  async (userId, { rejectWithValue }) => {
+  async (params = {}, { rejectWithValue }) => {
     try {
-      const response = await noteService.getNotes(userId);
-      return response.documents;
+      const response = await api.notes.getAll(params);
+      return response.notes;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -17,8 +17,8 @@ export const createNewNote = createAsyncThunk(
   "notes/createNote",
   async (noteData, { rejectWithValue }) => {
     try {
-      const response = await noteService.createNote(noteData);
-      return response;
+      const response = await api.notes.create(noteData);
+      return response.note;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -29,22 +29,44 @@ export const updateExistingNote = createAsyncThunk(
   "notes/updateNote",
   async ({ noteId, noteData }, { rejectWithValue }) => {
     try {
-      const response = await noteService.updateNote(noteId, noteData);
-      return response;
+      const response = await api.notes.update(noteId, noteData);
+      return response.note;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Add this after the other async thunks
+export const deleteNoteSoft = createAsyncThunk(
+  "notes/deleteNoteSoft",
+  async (noteId, { rejectWithValue }) => {
+    try {
+      const response = await api.notes.delete(noteId);
+      return response.note;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const deleteNotePermantly = createAsyncThunk(
   "notes/deleteNote",
   async (noteId, { rejectWithValue }) => {
     try {
-      const success = await noteService.deleteNote(noteId);
-      if (success) return noteId;
-      return rejectWithValue("Failed to delete note");
+      await api.notes.permanentDelete(noteId);
+      return noteId;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const restoreNote = createAsyncThunk(
+  "notes/restoreNote",
+  async (noteId, { rejectWithValue }) => {
+    try {
+      const response = await api.notes.restore(noteId);
+      return response.note;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -53,7 +75,7 @@ export const deleteNotePermantly = createAsyncThunk(
 
 const initialState = {
   notes: [],
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: "idle",
   error: null,
 };
 
@@ -63,7 +85,7 @@ const notesSlice = createSlice({
   reducers: {
     clearNotes: (state) => {
       state.notes = [];
-      state.status = 'idle';
+      state.status = "idle";
       state.error = null;
     },
   },
@@ -81,20 +103,29 @@ const notesSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(createNewNote.fulfilled, (state, action) => {
-        state.notes.push(action.payload);
+        state.notes.unshift(action.payload);
       })
       .addCase(updateExistingNote.fulfilled, (state, action) => {
-        const index = state.notes.findIndex(
-          (note) => note.$id === action.payload.$id
-        );
-
+        const index = state.notes.findIndex((note) => note._id === action.payload._id);
+        if (index !== -1) {
+          state.notes[index] = action.payload;
+        }
+      })
+      .addCase(deleteNoteSoft.fulfilled, (state, action) => {
+        const index = state.notes.findIndex((note) => note._id === action.payload._id);
         if (index !== -1) {
           state.notes[index] = action.payload;
         }
       })
       .addCase(deleteNotePermantly.fulfilled, (state, action) => {
-        state.notes = state.notes.filter(note => note.$id !== action.payload);
+        state.notes = state.notes.filter((note) => note._id !== action.payload);
       })
+      .addCase(restoreNote.fulfilled, (state, action) => {
+        const index = state.notes.findIndex((note) => note._id === action.payload._id);
+        if (index !== -1) {
+          state.notes[index] = action.payload;
+        }
+      });
   },
 });
 

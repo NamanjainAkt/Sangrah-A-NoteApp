@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
-import authService from '../appwrite/auth'
 import {Link, useNavigate} from 'react-router-dom'
-import {login} from '../store/authSlice'
+import { register as authRegister, login as authLogin } from '../store/authSlice'
+import { fetchNotes } from '../store/notesSlice';
+import { fetchTags } from '../store/tagsSlice';
+import { fetchGoals } from '../store/goalsSlice';
+import { fetchGamification } from '../store/gamificationSlice';
 import {Button, Input, Logo} from '../components'
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
@@ -12,13 +15,15 @@ function Signup() {
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
 
-    const create = async(data) => {
+    const handleRegister = async(data) => {
         setError("")
         try {
-            const userData = await authService.createAccount(data)
-            if (userData) {
-                const userData = await authService.getCurrentUser()
-                if(userData) dispatch(login(userData));
+            const result = await dispatch(authRegister(data)).unwrap()
+            if (result) {
+                dispatch(fetchNotes())
+                dispatch(fetchTags())
+                dispatch(fetchGoals())
+                dispatch(fetchGamification())
                 navigate("/")
             }
         } catch (error) {
@@ -44,7 +49,7 @@ function Signup() {
             </p>
             {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-            <form onSubmit={handleSubmit(create)} className="mt-8">
+            <form onSubmit={handleSubmit(handleRegister)} className="mt-8">
                 <div className='space-y-5'>
                     <Input
                     label="Full Name: "
@@ -70,7 +75,9 @@ function Signup() {
                     type="password"
                     placeholder="Enter your password"
                     {...register("password", {
-                        required: true,})}
+                        required: true,
+                        minLength: { value: 6, message: 'Password must be at least 6 characters' }
+                    })}
                     />
                     <Button type="submit" className="w-full">
                         Create Account

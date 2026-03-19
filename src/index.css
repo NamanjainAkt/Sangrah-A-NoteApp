@@ -1,28 +1,126 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Festive&family=Fredoka:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24..48,100..700,0..1,-50..200');
 @import "tailwindcss";
 
 *{
   font-family: "Fredoka", sans-serif;
+  box-sizing: border-box;
 }
+
 .sangrah{
   font-family: "Festive";
 }
 
+/* Custom scrollbar styling for dark theme */
 .custom-scroll::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #1f2937;
   border-radius: 10px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  background-color: #292929;
+  background-color: #4b5563;
   border-radius: 10px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #6b7280;
+}
+
+/* Global scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Fix for potential overflow issues */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Ensure proper dark theme backgrounds */
+.dark body {
+  background-color: #171717;
+  color: #ffffff;
+}
+
+/* Responsive text sizing */
+.text-responsive {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+/* Fix for touch targets on mobile */
+@media (max-width: 640px) {
+  button, [role="button"], .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Z-index scale for proper layering */
+.z-layer-backdrop { z-index: 40; }
+.z-layer-dropdown { z-index: 45; }
+.z-layer-modal { z-index: 50; }
+.z-layer-tooltip { z-index: 55; }
+.z-layer-toast { z-index: 60; }
+
+/* Animation for fade-in */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Material Symbols base styles */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+/* Line clamp utility for text truncation */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

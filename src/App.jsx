@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import { Home, Archive, Important, Bin } from "./pages"
+import { Home, Archive, Important, Bin, Settings, Kanban, Goals, Badges, Timer, Calendar, Analytics } from "./pages"
 import Sidebar from "./components/Sidebar"
 import Navbar from "./components/Navbar"
 import Login from "./pages/Login"
@@ -7,10 +7,16 @@ import Signup from "./pages/Signup"
 import AuthLayout from "./components/AuthLayout"
 import AuthInitializer from "./components/AuthInitializer"
 import Footer  from "./components/Footer"
+import { ToastContainer } from 'react-toastify'
+import { initPersistence } from './utils/persistence'
+import 'react-toastify/dist/ReactToastify.css'
+
+// Initialize persistence layer
+initPersistence().catch(console.error);
 
 const App = () => {
   return (
-    <div className="min-h-screen dark:bg-black bg-white">
+    <div className="min-h-screen dark:bg-[#171717] bg-white">
       <AuthInitializer />
       <Routes>
         <Route path="/login" element={
@@ -26,11 +32,11 @@ const App = () => {
 
         <Route path="/" element={
           <AuthLayout authentication={true}>
-            <div className="min-h-screen dark:bg-black bg-white">
+            <div className="min-h-screen dark:bg-[#171717] bg-white">
               <Navbar />
-              <main className="flex max-sm:relative max-sm:flex-none justify-end">
-                <Sidebar className="w-1/3 max-sm:bottom-0" />
-                <div className="w-2/3 min-w-[70vw] min-h-[90vh] flex justify-end items-center p-4 mt-14 max-sm:mx-auto right-0 mx-4 md:mx-auto max-sm:mt-4 max-sm:w-full">
+              <main className="flex pt-16">
+                <Sidebar />
+                <div className="flex-1 min-w-0 p-4 max-sm:p-2 overflow-hidden">
                   <Home />
                 </div>
               </main>
@@ -38,49 +44,47 @@ const App = () => {
           </AuthLayout>
         } />
 
-        <Route path="/archive" element={
-          <AuthLayout authentication={true}>
-            <div className="min-h-screen dark:bg-black bg-white">
-              <Navbar />
-              <main className="flex">
-                <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-4 mt-4 mx-auto max-sm:w-full">
-                  <Archive />
-                </div>
-              </main>
-            </div>
-          </AuthLayout>
-        } />
-
-        <Route path="/important" element={
-          <AuthLayout authentication={true}>
-            <div className="min-h-screen dark:bg-black bg-white">
-              <Navbar />
-              <main className="flex">
-                <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-4 mt-4 mx-auto max-sm:w-full">
-                  <Important />
-                </div>
-              </main>
-            </div>
-          </AuthLayout>
-        } />
-
-        <Route path="/bin" element={
-          <AuthLayout authentication={true}>
-            <div className="min-h-screen dark:bg-black bg-white">
-              <Navbar />
-              <main className="flex">
-                <Sidebar className="w-1/3" />
-                <div className="w-2/3 min-w-[80vw] min-h-[90vh] flex justify-center items-center p-4 mt-4 mx-auto max-sm:w-full">
-                  <Bin />
-                </div>
-              </main>
-            </div>
-          </AuthLayout>
-        } />
+        {/* Create a common layout wrapper for all authenticated routes */}
+        {[
+          { path: "/kanban", component: <Kanban /> },
+          { path: "/goals", component: <Goals /> },
+          { path: "/archive", component: <Archive /> },
+          { path: "/important", component: <Important /> },
+          { path: "/bin", component: <Bin /> },
+          { path: "/badges", component: <Badges /> },
+          { path: "/settings", component: <Settings /> },
+          { path: "/timer", component: <Timer /> },
+          { path: "/calendar", component: <Calendar /> },
+          { path: "/analytics", component: <Analytics /> }
+        ].map(({ path, component }) => (
+          <Route key={path} path={path} element={
+            <AuthLayout authentication={true}>
+              <div className="min-h-screen dark:bg-[#171717] bg-white">
+                <Navbar />
+                <main className="flex pt-16">
+                  <Sidebar />
+                  <div className="flex-1 min-w-0 p-4 max-sm:p-2 overflow-hidden">
+                    {component}
+                  </div>
+                </main>
+              </div>
+            </AuthLayout>
+          } />
+        ))}
       </Routes>
       <Footer className="w-full h-16 bottom-0" />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
 
   )

@@ -15,46 +15,79 @@ export class Service {
     }
 
     // Create a note (no slug, use ID.unique())
-async createNote({ title, content, userId, isArchived, isImportant, isDeleted }) {
-    try {
-        return await this.databases.createDocument(
-            conf.appwriteDatabaseId,
-            conf.appwriteCollectionId,
-            ID.unique(),
-            {
+    async createNote({ title, content, userId, isArchived = false, isImportant = false, isDeleted = false, tasks, status, tags, dueDate }) {
+        try {
+            const documentData = {
                 title,
                 content,
                 isArchived,
                 isImportant,
                 isDeleted,
-                userId,  // ← saved in document
-            },
-            [
-                Permission.read(Role.user(userId)),
-                Permission.update(Role.user(userId)),
-                Permission.delete(Role.user(userId))
-            ]
-        );
-    } catch (error) {
-        console.log("Appwrite service :: createNote :: error", error);
+                userId,
+            };
+
+            // Only include optional fields if they are provided (matches Appwrite schema)
+            if (tasks !== undefined) {
+                documentData.tasks = tasks;
+            }
+            if (status !== undefined) {
+                documentData.status = status;
+            }
+            if (tags !== undefined) {
+                documentData.tags = tags;
+            }
+            if (dueDate !== undefined) {
+                documentData.dueDate = dueDate;
+            }
+
+            return await this.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                ID.unique(),
+                documentData,
+                [
+                    Permission.read(Role.user(userId)),
+                    Permission.update(Role.user(userId)),
+                    Permission.delete(Role.user(userId))
+                ]
+            );
+        } catch (error) {
+            console.log("Appwrite service :: createNote :: error", error);
+        }
     }
-}
 
 
     // Update a note by document ID
-    async updateNote(noteId, { title, content, isArchived, isImportant, isDeleted }) {
+    async updateNote(noteId, { title, content, isArchived, isImportant, isDeleted, tasks, status, tags, dueDate }) {
         try {
+            const updateData = {
+                title,
+                content,
+                isArchived,
+                isImportant,
+                isDeleted
+            };
+
+            // Only include tasks and status if they are defined
+            if (tasks !== undefined) {
+                updateData.tasks = tasks;
+            }
+            if (status !== undefined) {
+                updateData.status = status;
+            }
+            // Handle tags and dueDate for Phase 3
+            if (tags !== undefined) {
+                updateData.tags = tags;
+            }
+            if (dueDate !== undefined) {
+                updateData.dueDate = dueDate;
+            }
+
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 noteId,
-                {
-                    title,
-                    content,
-                    isArchived,
-                    isImportant,
-                    isDeleted
-                }
+                updateData
             );
         } catch (error) {
             console.log("Appwrite service :: updateNote :: error", error);
